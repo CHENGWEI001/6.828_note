@@ -14,3 +14,10 @@
     exec cat) failed
     6.828$ 
     ```
+# steps
+```
+// turn on
+ubuntu@ip-172-31-27-238:~/6.828/xv6-public$ make qemu-nox-gdb
+// attach
+ubuntu@ip-172-31-27-238:~/6.828/xv6-public$ gdb
+```
