@@ -1,0 +1,2 @@
+# note
+* The point of this hw is to get idea about when user space do system call, how it link to syscall(name), [https://github.com/batmanW1/6.828-1/blob/master/hw3/solution.md] this link explain very detail about how this work. ( see part 2 text)
