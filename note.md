@@ -47,3 +47,20 @@ to return in a different process
 * having issue that fail in stresssched, turn out something issing in mp_main ( not lock and forget to uncomment for loop)
 * when sched_yield(), the env yield the CPU, and later when env get rescheduled, it will start from env->tf.eip ( next ip of last point get trap or do system call).
 * after system call, we rely on env->tf.reg_eax to set the return value back to env
+* PTE_SHARE in JOS, why we need this?
+  The way JOS manage FD table is each process has a mapping FDTABLE, when doing open file( open disk file), inside serv.c it will mapping the addr to one of the entry in serv.c's opentab and mark that fd page as PTE_SHARE, if there is another process fork/sparwn from it, the PTE_SHARE will be taken care specially ( but if open file is not disk file , ex : pipe, then it is different)
+```
+static struct Dev *devtab[] =
+{
+	&devfile,
+	&devpipe,
+	&devcons,
+	0
+};
+```
+* when doing LAB5 spawnfaultio, I failed beause the spawned env is still able to access disk io, it turn out there is one line in spawn.c, I pass after mark this out:
+```
+	// child_tf.tf_eflags |= FL_IOPL_3;   // devious: see user/faultio.c
+	if ((r = sys_env_set_trapframe(child, &child_tf)) < 0)
+		panic("sys_env_set_trapframe: %e", r);
+```
